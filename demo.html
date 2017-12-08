@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+                <!--section 1-->
+                <section>
+                    <h2>C PRESENTATION</h2>
+                    <p>WHAT  CAN  WE  DO  WITH  C </p>
+                    
+                </section>
+                <!--section 2-->
+                <section>
+                    <h2>WHAT IS C</h2>
+                    <p class="fragment">computer programming language </p>
+                    <p class="fragment">A Way we understand Computer</p>
+                    <p class="fragment">Who can can play with</p>
+                </section>
+                
+                <!--section 3-->
+                <section data-transition = "zoom">
+                    <h2>So......</h2>
+                </section>
+                
+                <!--section 4-->
+                <section >
+                    <p class ="fragment">We have a idea!</p>
+                    <p class ="fragment">We can make a game</p>
+                    <p class ="fragment">called: 2048</p>
+                </section>
+                
+                <!--section 5-->
+                <section data-transition="zoom">
+                    <img data-src="pic/2048.png">
+                        </section>
+                
+                <!--section 6-->
+                <section data-transition="zoom">
+                    <p class ="fragment">NO!</p>
+                    <p class ="fragment">This is a dream App!</P>
+                </section>
+                <!--section 7-->
+                <section data-transition="zoom">
+                    <img data-src="pic/terminal-2048.png">
+                        </section>
+                <!--section 8-->
+                <section data-transition="slide" data-background="#dddddd" data-background-transition="zoom">
+                    <h2> Part One: Gerneral idea </h2>
+                    </section>
+                <section>
+                    <h3 class="fragment fade-out">arrays</h3>
+                    <p class ="fragment"><span class="fragment highlight-brown">a two dimensional array</span></P>
+                    <p class ="fragment">two bool arrays</P>
+                    
+                    <!--第一个布尔数组用来存每一个单元是否有方块，其实这个功能可以用整形数组去实现，但在敲的过程中容易混淆，也不好debug。所以还是用一个布尔数组去存比较方便。
+                     第二个布尔数组是为了防止重复计算。例如现在一行的情况是 | 0 | 4 | 2 | 2|。然后向右移动，从右往左判断时，因为2+2已经运算过，给最右边的那个格子进行标记。表示已经运算过，不能再次运算。
+                     -->
+                </section>
+
+				<!--Example of nested vertical slides
+				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+					<section>
+						<h2>Vertical Slides</h2>
+						<p>Slides can be nested inside of each other.</p>
+						<p>Use the <em>Space</em> key to navigate through all slides.</p>
+						<br>
+						<a href="#" class="navigate-down">
+							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section-->
+                
+                <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+                    <h2> Part Two: Code </h2>
+                </section>
+                <section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Print out the matrix
+                        
+                        ```C
+                      void print()
+                      {
+                        
+                        for(int j=0;j<4;++j)
+                            printf("----");
+                            printf("\n");
+                            for(int i=0;i<4;++i){
+                            for(int j=0;j<4;++j){
+                            printf("|");
+                            if(map[i][j]){//有数字就打印，没有就打印空格
+                            if(score<mp[i][j])
+                            score=mp[i][j];//更新最高分
+                            printf("%3d",mp[i][j]);
+                            }else
+                            printf("   ");
+                            
+                            }
+                            printf("|\n");
+                            for(int j=0;j<4;++j)
+                            printf("----");
+                            printf("\n");
+                            }
+                            printf("w : up  s : down  a : left  d : right\n");
+                            printf("push 'r' to start a new game\npush 'e' to exit game\n");//动作按钮
+                            }
+                            ```
+                    </textarea>
+                </section>
+                
+            <section data-markdown id="fragments">
+                <textarea data-template>
+           ## Move up
+                        
+            ```C
+            void MoveUp()
+             {
+                bool flag;//标记是否有合法合并点
+                for(int i=1;i<4;++i){//因为是向上，所以第一行不考虑
+                          for(int j=0;j<4;++j){
+                              if(!map[i][j])//没有数字的点不考虑
+                                 continue;
+                              flag=false;
+                              int pos=i;
+                              for(int k=i-1;k>=0;--k){
+                                if(!map[k][j]){//可以移动到的空格地址
+                                pos=k;
+                                 continue;
+                            }
+                            if((mp[k][j]==mp[i][j])&&(!cal[k][j])){//值相同且没有进行过计算的点
+                                   mp[k][j]+=mp[i][j];
+                                cal[k][j]=true;
+                                flag=true;
+                                map[i][j]=false;
+                            }
+                            else
+                                break;
+                            }
+                            if(!flag){//点更新
+                               mp[pos][j]=mp[i][j];
+                               map[i][j]=false;
+                               map[pos][j]=true;
+                          }
+                      }
+                  }
+            }
+            ```
+                    </textarea>
+
+            </section>
+            
+            <section data-markdown id="fragments">
+                <textarea data-template>
+                    ## Initialize the game
+                    
+                    ```C
+                    void Init()
+                    {
+                    srand(time(NULL));
+                    int x,y,v,now=0;
+                    for(int i=0;i<4;++i)
+                        for(int j=0;j<4;++j)
+                        if(!map[i][j])
+                        now++;//统计还有多少空格
+                        if(now==0)//没有空格就不需要加点
+                        return;
+                        int cnt=rand()%now,n=0;//随机在第n个空白点
+                        bool flag=false;
+                        for(int i=0;i<4;++i){
+                        flag=false;
+                        for(int j=0;j<4;++j)
+                        if(!map[i][j]){
+                        if(cnt==n){
+                        x=i;
+                        y=j;
+                        flag=true;
+                        break;
+                        }else
+                        n++;
+                        }
+                        if(flag)
+                        break;
+                        }
+                        v=rand()%2;
+                        if(v)//两种情况
+                        v=4;
+                        else
+                        v=2;
+                        mp[x][y]=v;
+                        map[x][y]=true;
+                        }
+                        ```
+                        </textarea>
+                
+            </section>
+            
+            <section data-markdown id="fragments">
+                <textarea data-template>
+                    ## Determine if the game is over
+                    
+                    ```C
+                    void Init()
+                    {
+                    srand(time(NULL));
+                    int x,y,v,now=0;
+                    for(int i=0;i<4;++i)
+                        for(int j=0;j<4;++j)
+                        if(!map[i][j])
+                        now++;//统计还有多少空格
+                        if(now==0)//没有空格就不需要加点
+                        return;
+                        int cnt=rand()%now,n=0;//随机在第n个空白点
+                        bool flag=false;
+                        for(int i=0;i<4;++i){
+                        flag=false;
+                        for(int j=0;j<4;++j)
+                        if(!map[i][j]){
+                        if(cnt==n){
+                        x=i;
+                        y=j;
+                        flag=true;
+                        break;
+                        }else
+                        n++;
+                        }
+                        if(flag)
+                        break;
+                        }
+                        v=rand()%2;
+                        if(v)//两种情况
+                        v=4;
+                        else
+                        v=2;
+                        mp[x][y]=v;
+                        map[x][y]=true;
+                        }
+                        ```
+                        </textarea>
+                        
+                        </section>
+            <section data-markdown id="fragments">
+                <textarea data-template>
+                    ## Game Begin
+                    
+                    ```C
+                    void start()
+                    {
+                      system("cls");//刷新屏幕
+                      printf("********************\n");
+                      printf("* game start glhf~ *\n");
+                      printf("********************\n");
+                      int x=5e8;
+                      bool flag=false;
+                      while(x--);//为了让glhf停留一段时间
+                      memset(mp,0,sizeof(mp));
+                      memset(map,false,sizeof(map));
+                      score=0;
+                      char ch;
+                      while(!gameover())
+                      {
+                          memset(cal,false,sizeof(cal));//每次动作前都需要对cal进行初始化
+                          int cnt=0;
+                          system("cls");
+                          Init();
+                          print();
+                          // DeBug();调试用
+                          ch=getch();
+                          switch (ch)
+                          {
+                              case 'w':MoveUp();break;
+                              case 's':MoveDown();break;
+                              case 'a':MoveLeft();break;
+                              case 'd':MoveRight();break;
+                              case 'e':exit(0);
+                              case 'r':return ;
+                          }
+                          if(score>=2048){
+                               flag=true;
+                               break;
+                          }
+                        }
+                        if(flag)
+                             Win();
+                        else
+                           Lose();
+                        return ;
+                  }
+                        ```
+                        </textarea>
+                        
+                        </section>
+
+                </section>
+                
+                <section data-transition="slide" data-background="#dddddd" data-background-transition="zoom">
+                    <h2> Part Three: Summary </h2>
+                </section>
+                <section>
+                    <p class ="fragment fade-out">This is what we have done</p><br>
+                    <p class ="fragement">This is our way to use C</P>
+                </section>
+					</p>
+				</section>
+
+				<section>
+					<center>
+                        <h1>THE END</h1>
+                    <br>
+                    <h2>Thank you for your listening
+                    </h2>
+                    </center>
+                    <p>
+                       <a>TerryLiu</a>
+                       <a>xxxxxxxx</a>
+                    </p>
+                    <p>
+                    <font size=2>
+                        <a href="https://github.com/terenceliu98presentation.github.io">Read this page by youselves</a> <br>
+                        <a href="https://github.com/terenceliu98/c-presentation-2048">Source code &amp; documentation</a>
+                    </font>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
