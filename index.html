@@ -127,9 +127,9 @@
                             for(int i=0;i<4;++i){
                             for(int j=0;j<4;++j){
                             printf("|");
-                            if(map[i][j]){//有数字就打印，没有就打印空格
+                            if(map[i][j]){//
                             if(score<mp[i][j])
-                            score=mp[i][j];//更新最高分
+                            score=mp[i][j];//
                             printf("%3d",mp[i][j]);
                             }else
                             printf("   ");
@@ -141,7 +141,7 @@
                             printf("\n");
                             }
                             printf("w : up  s : down  a : left  d : right\n");
-                            printf("push 'r' to start a new game\npush 'e' to exit game\n");//动作按钮
+                            printf("push 'r' to start a new game\npush 'e' to exit game\n");//
                             }
                             ```
                     </textarea>
@@ -154,19 +154,20 @@
             ```C
             void MoveUp()
              {
-                bool flag;//标记是否有合法合并点
-                for(int i=1;i<4;++i){//因为是向上，所以第一行不考虑
+                bool flag;//
+                for(int i=1;i<4;++i){//
                           for(int j=0;j<4;++j){
-                              if(!map[i][j])//没有数字的点不考虑
+                              if(!map[i][j])//
                                  continue;
                               flag=false;
                               int pos=i;
-                              for(int k=i-1;k>=0;--k){
-                                if(!map[k][j]){//可以移动到的空格地址
+                              for(int k=i-1;k>=0;--k)
+                              {
+                                if(!map[k][j]){//
                                 pos=k;
-                                 continue;
-                            }
-                            if((mp[k][j]==mp[i][j])&&(!cal[k][j])){//值相同且没有进行过计算的点
+                                continue;
+                                }
+                            if((mp[k][j]==mp[i][j])&&(!cal[k][j])){//
                                    mp[k][j]+=mp[i][j];
                                 cal[k][j]=true;
                                 flag=true;
@@ -200,10 +201,10 @@
                     for(int i=0;i<4;++i)
                         for(int j=0;j<4;++j)
                         if(!map[i][j])
-                        now++;//统计还有多少空格
-                        if(now==0)//没有空格就不需要加点
+                        now++;//
+                        if(now==0)//
                         return;
-                        int cnt=rand()%now,n=0;//随机在第n个空白点
+                        int cnt=rand()%now,n=0;//
                         bool flag=false;
                         for(int i=0;i<4;++i){
                         flag=false;
@@ -221,7 +222,7 @@
                         break;
                         }
                         v=rand()%2;
-                        if(v)//两种情况
+                        if(v)//
                         v=4;
                         else
                         v=2;
@@ -242,10 +243,10 @@
                     {
                     for(int i=0;i<4;++i){
                         for(int j=0;j<4;++j){
-                        if(!map[i][j])//任意一点为空，游戏继续
+                        if(!map[i][j])//
                         return false;
                         if(i>0){
-                        if(mp[i-1][j]==mp[i][j])//任意两个相邻的单元值相同，游戏继续
+                        if(mp[i-1][j]==mp[i][j])//
                         return false;
                         }
                         if(j>0)
@@ -266,25 +267,25 @@
                     ```C
                     void start()
                     {
-                      system("cls");//刷新屏幕
+                      system("cls");//
                       printf("********************\n");
                       printf("* game start glhf~ *\n");
                       printf("********************\n");
                       int x=5e8;
                       bool flag=false;
-                      while(x--);//为了让glhf停留一段时间
+                      while(x--);//
                       memset(mp,0,sizeof(mp));
                       memset(map,false,sizeof(map));
                       score=0;
                       char ch;
                       while(!gameover())
                       {
-                          memset(cal,false,sizeof(cal));//每次动作前都需要对cal进行初始化
+                          memset(cal,false,sizeof(cal));//
                           int cnt=0;
                           system("cls");
                           Init();
                           print();
-                          // DeBug();调试用
+                          // DeBug();
                           ch=getch();
                           switch (ch)
                           {
